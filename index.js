@@ -1,34 +1,45 @@
-const express=require("express");
-const app=express();
+const express = require("express");
+const app = express();
 
-const methodOverride=require("method-override")
+const methodOverride = require("method-override")
 app.use(methodOverride("_method"))
 
-const bodyParser= require("body-parser")
-app.use(bodyParser.urlencoded({ extended: false}));
+const bodyParser = require("body-parser")
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
 
-const flash=require("express-flash")
-const cookieParser=require("cookie-parser")
-const session=require("express-session")
+const flash = require("express-flash")
+const cookieParser = require("cookie-parser")
+const session = require("express-session")
 
 require("dotenv").config();
-const port=process.env.PORT;
+const port = process.env.PORT;
 
-const systemConfig=require("./config/system.js")
+// Tiny MCE
+var path = require('path');
+app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
+// End Tiny MCE
 
-const database=require("./config/database.js")
+const systemConfig = require("./config/system.js")
+
+const database = require("./config/database.js")
 database.connect()
 
 // route
-const routeAdmin=require("./routes/admin/index.route.js")
-const route=require("./routes/client/index.route.js");
+const routeAdmin = require("./routes/admin/index.route.js")
+const route = require("./routes/client/index.route.js");
 
-app.set("views",`${__dirname}/views`);
-app.set("view engine","pug");
+app.set("views", `${__dirname}/views`);
+app.set("view engine", "pug");
 
 // Flash
 app.use(cookieParser("DANGTHANHMAI"))
-app.use(session({cookie: {maxAge: 60000}}));
+app.use(session({
+    cookie: {
+        maxAge: 60000
+    }
+}));
 app.use(flash());
 // End Flash
 
@@ -37,7 +48,7 @@ routeAdmin(app);
 route(app);
 
 // App Locals Variables
-app.locals.prefixAdmin=systemConfig.prefixAdmin;
-app.listen(port,()=>{
+app.locals.prefixAdmin = systemConfig.prefixAdmin;
+app.listen(port, () => {
     console.log(port)
 });
