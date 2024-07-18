@@ -10,5 +10,7 @@ const validate=require("../../validates/admin/product-category.validates.js")
 route.get("/",controllerProductCategory.index)
 route.get("/create",controllerProductCategory.create)
 route.post("/create",fileUpload.single("thumbnail"),uploadCloud.upload,validate.createPost,controllerProductCategory.createPost)
-
+route.patch("/change-status/:status/:id",controllerProductCategory.changeStatus)
+route.delete("/delete/:id",controllerProductCategory.deleteItem)
+route.patch("/change-multi",controllerProductCategory.changeMulti)
 module.exports=route;

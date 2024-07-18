@@ -1,7 +1,7 @@
 mixin pagination(objectPagination)
     nav 
         ul(class="pagination")
-            if(objectPagination.currenPage > 1)
+            if (objectPagination.currenPage > 1)
                 li(class="page-item")
                     button(class="page-link"
                     button-pagination=objectPagination.currenPage-1
@@ -12,7 +12,7 @@ mixin pagination(objectPagination)
                         class=`page-link`
                         button-pagination=i
                         ) #{i}
-            if(objectPagination.currenPage < objectPagination.totalPage)
+            if (objectPagination.currenPage < objectPagination.totalPage)
                 li(class="page-item")
                     button(class="page-link"
                     button-pagination=objectPagination.currenPage+1) Kế tiếp

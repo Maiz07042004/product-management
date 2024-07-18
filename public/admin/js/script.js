@@ -1,3 +1,4 @@
+// Filter-status
 const buttons = document.querySelectorAll("[button_status]");
 
 if (buttons.length > 0) {
@@ -20,15 +21,16 @@ if (buttons.length > 0) {
         });
     });
 }
+// End Filter-status
 
 
+// Search
 const formSearch=document.querySelector("#form-search")
 if(formSearch){
     let url=new URL(window.location.href)
     formSearch.addEventListener("submit",(e)=>{
         e.preventDefault();
         const keyword=e.target.elements.keyword.value;
-        console.log(keyword)
         if(keyword)
             url.searchParams.set("keyword",keyword)
         else
@@ -37,11 +39,12 @@ if(formSearch){
     }
     )
 }
+// End Search
+
 
 // pagination
 const buttonPagination=document.querySelectorAll("[button-pagination]")
-
-if(buttonPagination)
+if(buttonPagination){
     buttonPagination.forEach(button=>{
         let url=new URL(window.location.href)
         button.addEventListener("click",()=>{
@@ -51,11 +54,12 @@ if(buttonPagination)
         }
         )
     })
+}
 // end pagination
+
 
 // Checkbox-Multi
 const checkboxMulti=document.querySelector("[checkbox-multi]")
-
 if(checkboxMulti){
     const inputCheckAll=checkboxMulti.querySelector("input[name='checkall']")
     const inputsId=checkboxMulti.querySelectorAll("input[name='id']")
@@ -131,18 +135,19 @@ if(formChangeMulti){
 
 
 // Show Alert
-const showAlert=document.querySelector("[show-alert]");
-if(showAlert){
-    const time=parseInt(showAlert.getAttribute("data-time"));
-    const closeAlert=showAlert.querySelector("[close-alert]")
-    setTimeout(()=>{
+const showAlert = document.querySelector("[show-alert]");
+if (showAlert) {
+    const time = parseInt(showAlert.getAttribute("data-time"));
+    const closeAlert = showAlert.querySelector("[close-alert]")
+    setTimeout(() => {
         showAlert.classList.add("alert-hidden");
-    },time)
+    }, time)
 
-    closeAlert.addEventListener("click",()=>{
+    closeAlert.addEventListener("click", () => {
         showAlert.classList.add("alert-hidden");
     })
 }
+
 // End Show Alert
 
 // Upload image
