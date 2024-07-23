@@ -13,4 +13,7 @@ route.post("/create",fileUpload.single("thumbnail"),uploadCloud.upload,validate.
 route.patch("/change-status/:status/:id",controllerProductCategory.changeStatus)
 route.delete("/delete/:id",controllerProductCategory.deleteItem)
 route.patch("/change-multi",controllerProductCategory.changeMulti)
+route.get("/edit/:id",controllerProductCategory.edit)
+route.patch("/edit/:id",fileUpload.single("thumbnail"),uploadCloud.upload,validate.createPost,controllerProductCategory.editPatch)
+route.get("/detail/:id",controllerProductCategory.detail)
 module.exports=route;

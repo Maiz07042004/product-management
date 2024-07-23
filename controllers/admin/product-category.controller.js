@@ -3,7 +3,7 @@ const systemConfig=require("../../config/system")
 const filterStatusHelpers=require("../../helpers/filterStatus")
 const searchHelpers=require("../../helpers/search")
 const objectPaginationHelpers=require("../../helpers/pagination")
-const flash = require("express-flash")
+const createTreeHelpers=require("../../helpers/createTree")
 
 
 
@@ -37,11 +37,12 @@ module.exports.index=async(req,res)=>{
             req.query,
             countRecord
     )
-    const records=await ProductCategory.find(find).limit(objectPagination.limitItem).skip(objectPagination.skip).sort(sort)
+    const records=await ProductCategory.find(find).skip(objectPagination.skip).sort(sort)
+    const newRecords=createTreeHelpers.tree(records)
     res.render("admin/pages/products-category/index.pug",{
         pageTitle:"Danh mục sản phẩm",
         filterStatus: filterStatus,
-        records: records,
+        records: newRecords,
         keyword: objectSearch.keyword,
         objectPagination: objectPagination
         
@@ -51,8 +52,14 @@ module.exports.index=async(req,res)=>{
 
 // [GET]/admin/products-category/create
 module.exports.create=async(req,res)=>{
+    let find={
+        deleted:false
+    }
+    const record=await ProductCategory.find(find)
+    const newRecords=createTreeHelpers.tree(record)
     res.render("admin/pages/products-category/create.pug",{
         pageTitle:"Danh mục sản phẩm",
+        records:newRecords
     }
     )
 }
@@ -123,3 +130,49 @@ module.exports.changeMulti=async(req,res)=>{
     res.redirect("back")
 }
 
+// [GET]/admin/products-category/edit/:id
+module.exports.edit=async(req,res)=>{
+    try {
+        const find={
+            deleted:false,
+            _id:req.params.id
+        }
+        const record= await ProductCategory.findOne(find)
+        res.render("admin/pages/products-category/edit.pug",{
+            record:record
+        })
+    } catch (error) {
+        res.redirect(`${systemConfig.prefixAdmin}/products-category`)
+    }
+
+}
+
+// [PATCH]/admin/products-category/edit/:id
+module.exports.editPatch=async(req,res)=>{
+    req.body.position=parseInt(req.body.position);
+    try {
+        await ProductCategory.updateOne({_id:req.params.id},req.body)
+        req.flash("success","Cập nhật sản phẩm thành công")
+    } catch (error) {
+        req.flash("error","Cập nhật thất bại")
+    }
+    res.redirect(`${systemConfig.prefixAdmin}/products-category`)
+}
+
+
+// [GET]/admin/products-category/detail/:id
+module.exports.detail=async(req,res)=>{
+    try {
+        let find={
+            deleted:false,
+            _id:req.params.id
+        }
+        const record=await ProductCategory.findOne(find)
+        res.render("admin/pages/products-category/detail.pug",{
+            product:record
+        })
+    } catch (error) {
+        res.redirect(`${systemConfig.prefixAdmin}/products-category`)
+    }
+
+}
