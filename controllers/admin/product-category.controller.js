@@ -137,9 +137,12 @@ module.exports.edit=async(req,res)=>{
             deleted:false,
             _id:req.params.id
         }
-        const record= await ProductCategory.findOne(find)
+        const data= await ProductCategory.findOne(find)
+        const records=await ProductCategory.find({deleted:false})
+        const newRecords=createTreeHelpers.tree(records)
         res.render("admin/pages/products-category/edit.pug",{
-            record:record
+            data:data,
+            records:newRecords
         })
     } catch (error) {
         res.redirect(`${systemConfig.prefixAdmin}/products-category`)
