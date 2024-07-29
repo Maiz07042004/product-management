@@ -5,7 +5,7 @@ const controllerProductCategory=require("../../controllers/admin/product-categor
 const multer=require("multer")
 const fileUpload = multer()
 const uploadCloud=require("../../middlewares/admin/uploadCloud.middleware")
-const validate=require("../../validates/admin/product-category.validates.js")
+const validate=require("../../validates/admin/product-category.validate.js")
 
 route.get("/",controllerProductCategory.index)
 route.get("/create",controllerProductCategory.create)
