@@ -77,3 +77,31 @@ module.exports.detail=async(req,res)=>{
         req.flash("error","Lỗi")
     }
 }
+
+// [GET]/admin/roles/permissions
+module.exports.permissions=async(req,res)=>{
+    try {
+        let find={
+            deleted:false
+        }
+        const records=await Role.find(find)
+        res.render("admin/pages/roles/permissions.pug",{
+            records:records
+        })
+    } catch (error) {
+        req.flash("error","Lỗi")
+    }
+}
+
+// [GET]admin/roles/permissions
+module.exports.permissionsPatch=async(req,res)=>{
+    try {
+        const permissions=JSON.parse(req.body.permissions)
+        for (const item of permissions) {
+            await Role.updateOne({_id:item.id},{permissions:item.permissions})
+        }
+    } catch (error) {
+        req.flash("error","Lỗi")
+    }
+    res.redirect("back")
+}
