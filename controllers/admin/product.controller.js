@@ -1,4 +1,5 @@
 const Product=require("../../models/product.model")
+const Account=require("../../models/account.model")
 const ProductCategory=require("../../models/product-category.model")
 const filterStatusHelpers=require("../../helpers/filterStatus")
 const searchHelpers=require("../../helpers/search")
@@ -44,6 +45,12 @@ module.exports.index=async(req,res)=>{
 
 
     const Products= await Product.find(find).sort(sort).limit(objectPagination.limitItem).skip(objectPagination.skip)
+    for (const product of Products) {
+        const user=await Account.findOne({_id:product.createBy.account_id})
+        if(user){
+            product.accountFullName=user.fullName
+        }
+    }
     res.render("admin/pages/products/index.pug",{
         pageTitle:"Danh sách sản phẩm",
         Products:Products,
@@ -79,7 +86,11 @@ module.exports.changeMulti=async(req,res)=>{
             break;
         case "delete-all":
             await Product.updateMany({_id: {$in:ids}},{deleteAt:new Date(),
-                deleted:true
+                deleted:true,
+                deletedBy:{
+                    account_id:res.locals.user.id,
+                    deletedAt: new Date()
+                }
             })
             req.flash("success",`Đã xoá thành công ${ids.length} sản phẩm!`)
             break;
@@ -102,7 +113,10 @@ module.exports.deleteItem=async(req,res)=>{
     const id= req.params.id
     await Product.updateOne({_id:id},{
         deleted: true,
-        deleteAt: new Date()
+        deletedBy:{
+            account_id:res.locals.user.id,
+            deletedAt: new Date()
+        }
     })
     req.flash("success",`Xoá sản phẩm thành công!`)
     res.redirect("back")
@@ -131,7 +145,7 @@ module.exports.createPost= async(req,res)=>{
     } else{
         req.body.position=parseInt(req.body.position)
     }
-
+    req.body.createBy={account_id:res.locals.user.id};
     const product=new Product(req.body)
     await product.save()
     res.redirect(`${systemConfig.prefixAdmin}/products`)

@@ -5,6 +5,7 @@ include ../../mixins/pagination
 include ../../mixins/form-change-multi
 include ../../mixins/alert
 include ../../mixins/sort
+include ../../mixins/moment
 
 block main 
     if(role.permissions.includes("products_view"))
@@ -52,6 +53,7 @@ block main
                                 th Giá 
                                 th Vị trí
                                 th Trạng thái 
+                                th Người tạo
                                 th Hành động
                         tbody 
                             each item,index in Products
@@ -105,6 +107,9 @@ block main
                                                 button(
                                                     class="badge text-bg-danger"
                                                 ) Dừng hoạt động
+                                    td 
+                                        p #{item.accountFullName}
+                                        +formatDateTime(item.createBy.createAt)
                                     td 
                                         a(  
                                             href=`${prefixAdmin}/products/detail/${item.id}`

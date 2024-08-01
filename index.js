@@ -9,6 +9,8 @@ app.use(bodyParser.urlencoded({
     extended: false
 }));
 
+const moment=require("moment")
+
 const flash = require("express-flash")
 const cookieParser = require("cookie-parser")
 const session = require("express-session")
@@ -49,6 +51,7 @@ route(app);
 
 // App Locals Variables
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
+app.locals.moment=moment
 app.listen(port, () => {
     console.log(port)
 });
