@@ -89,7 +89,7 @@ module.exports.editPatch=async(req,res)=>{
             } else{
                 delete req.body.password
             }
-            await Account.updateMany({_id:req.params.id},req.body)
+            await Account.updateOne({_id:req.params.id},req.body)
             req.flash("success","Cập nhật tài khoản thành công")
         }
         res.redirect("back")
