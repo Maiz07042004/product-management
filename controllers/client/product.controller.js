@@ -1,5 +1,6 @@
 const flash = require("express-flash");
 const Product=require("../../models/product.model");
+const productHelpers=require("../../helpers/product")
 
 // [GET] /products
 module.exports.index=async(req,res)=>{
@@ -7,10 +8,7 @@ module.exports.index=async(req,res)=>{
         status: "active",
         deleted: false
     }).sort({position:"desc"});
-    const newProducts=products.map(item=>{
-        item.newPrice=(item.price*(100-item.discountPercentage)/100).toFixed()
-        return item
-    })
+    const newProducts=productHelpers.priceNewProducts(products)
     res.render("client/pages/products/index",{
         pageTitle:"Trang sản phẩm",
         product:newProducts
