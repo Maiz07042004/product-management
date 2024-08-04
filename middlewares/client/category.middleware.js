@@ -4,10 +4,11 @@ const createTreeHelpers=require("../../helpers/createTree")
 
 module.exports.category=async(req,res,next)=>{
     const productsCategory= await ProductCategory.find({
-        deleted:false
+        deleted:false,
+        status:"active"
     })
     const newProductsCategory=createTreeHelpers.tree(productsCategory)
-    
+
     res.locals.layoutProductsCategory=newProductsCategory
 
     next();

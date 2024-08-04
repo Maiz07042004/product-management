@@ -1,7 +1,7 @@
 const ProductCategory=require("../../models/product-category.model")
 const Product=require("../../models/product.model")
 const createTreeHelpers=require("../../helpers/createTree")
-const productHelpers=require("../../helpers/product")
+const productHelpers=require("../../helpers/products")
 // [GET]/
 module.exports.index=async(req,res)=>{
     // Lấy ra sản phẩm nổi bật
