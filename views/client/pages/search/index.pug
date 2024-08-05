@@ -1,0 +1,13 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-head
+include ../../mixins/product-layout.pug
+include ../../mixins/alert.pug
+
+block main 
+    +alert-error(5000)
+    .container.my-3 
+        .row 
+            .col-12 
+                +box-head("Kết quả tìm kiếm")
+
+        +product-grid(Products)
