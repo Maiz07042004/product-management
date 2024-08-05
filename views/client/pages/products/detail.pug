@@ -32,7 +32,7 @@ block main
                         div(class="inner-stock") Còn lại: <span>#{product.stock}</span>
                     
                     form(
-                        action=`cart/add/${product.id}`
+                        action=`/cart/add/${product.id}`
                         method="POST"
                     )
                         input(
