@@ -8,4 +8,8 @@ route.get("/register",controller.register)
 
 route.post("/register",validate.createPost,controller.registerPost)
 
+route.get("/login",controller.login)
+
+route.post("/login",validate.loginPost,controller.loginPost)
+
 module.exports=route
