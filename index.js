@@ -49,6 +49,12 @@ app.use(express.static(`${__dirname}/public`));
 routeAdmin(app);
 route(app);
 
+app.get("*",(req,res)=>{
+    res.render("client/pages/errors/404",{
+        pageTitle: "404 Not Found"
+    })
+})
+
 // App Locals Variables
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
 app.locals.moment=moment
