@@ -1,7 +1,6 @@
 const Account=require("../../models/account.model")
 const Role=require("../../models/role.model")
 const systemConfig=require("../../config/system")
-const { use } = require("../../routes/admin/auth.route")
 
 module.exports.requireAuth=async(req,res,next)=>{
     if(req.cookies.token){
@@ -13,8 +12,10 @@ module.exports.requireAuth=async(req,res,next)=>{
             next();
         } else{
             res.redirect(`${systemConfig.prefixAdmin}/auth/login`)
+            return
         }
     } else{
         res.redirect(`${systemConfig.prefixAdmin}/auth/login`)
+        return
     }
 }

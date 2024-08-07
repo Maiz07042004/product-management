@@ -141,10 +141,18 @@ module.exports.resetPassword=(req,res)=>{
     })
 }
 
+// [POST]/user/password/reset
 module.exports.resetPasswordPost=async(req,res)=>{
     const password=req.body.password;
     await User.updateOne({
         tokenUser:req.cookies.tokenUser
     },{password:md5(password)})
     res.redirect("/user/login")
+}
+
+// [GET]/user/info
+module.exports.info=(req,res)=>{
+    res.render("client/pages/user/info",{
+        pageTitle:"Thông tin cá nhân"
+    })
 }
