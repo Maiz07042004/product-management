@@ -1,5 +1,12 @@
 const express = require("express");
 const app = express();
+// Socket.io
+const http = require('http');
+const server = http.createServer(app);
+const { Server } = require("socket.io");
+const io = new Server(server);
+global._io=io;
+// End socket.io
 
 const methodOverride = require("method-override")
 app.use(methodOverride("_method"))
@@ -58,6 +65,6 @@ app.get("*",(req,res)=>{
 // App Locals Variables
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
 app.locals.moment=moment
-app.listen(port, () => {
+server.listen(port, () => {
     console.log(port)
 });
