@@ -1,3 +1,5 @@
+import * as Popper from 'https://cdn.jsdelivr.net/npm/@popperjs/core@^2/dist/esm/index.js'
+
 // CLIENT_SEND_MESSAGE
 const formSendData=document.querySelector(".chat .inner-form")
 if(formSendData){
@@ -34,3 +36,33 @@ socket.on("SEVER_RETURN_MESSAGE",(data)=>{
 
 })
 // END SEVER_RETURN_MESSAGE
+
+// Scroll Chat To Bottom
+const bodyChat=document.querySelector(".chat .inner-body")
+if(bodyChat){
+    bodyChat.scrollTop=bodyChat.scrollHeight
+}
+// End Scroll Chat To Bottom
+
+// emoji-picker
+// Show popup
+const buttonIcon = document.querySelector(".button-icon");
+if (buttonIcon) {
+    const tooltip = document.querySelector('.tooltip');
+    Popper.createPopper(buttonIcon, tooltip);
+    buttonIcon.onclick = () => {
+        tooltip.classList.toggle('shown')
+      }
+}
+
+// insert icon
+const emojiPicker = document.querySelector("emoji-picker");
+if (emojiPicker) {
+    const inputChat = document.querySelector(".chat .inner-foot .inner-form input[name='content']");
+    emojiPicker.addEventListener("emoji-click", (event) => {
+        const icon = event.detail.unicode;
+        inputChat.value += icon;  // Sửa lỗi gán giá trị
+    });
+}
+
+// end emoji-picker

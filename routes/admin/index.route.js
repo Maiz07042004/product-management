@@ -8,9 +8,11 @@ const myAccountRoute = require("./my-account.route.js")
 const settingRoute = require("./setting.route.js")
 const systemConfig = require("../../config/system.js")
 const authMiddleware = require("../../middlewares/admin/auth.middleware.js")
+const controllerAuth=require("../../controllers/admin/auth.controller.js")
 
 module.exports = (app) => {
     const PATH = systemConfig.prefixAdmin
+    app.get(PATH,controllerAuth.login)
     app.use(PATH + "/dashboard", authMiddleware.requireAuth, dashboardRoute)
 
     app.use(PATH + "/products", authMiddleware.requireAuth, productRoute)
