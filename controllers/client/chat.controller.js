@@ -21,6 +21,13 @@ module.exports.index=async(req,res)=>{
                 content:content
             })
         });
+        socket.on("CLIENT_SEND_TYPING",(type)=>{
+            socket.broadcast.emit("SERVER_RETURN_TYPING",{
+                userId:userId,
+                type:type,
+                fullName:fullName
+            })
+        })
       });
     // End socket.io
     const chats=await Chat.find({

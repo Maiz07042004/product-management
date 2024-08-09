@@ -373,3 +373,67 @@
     display: block; /* Show when active */
     opacity:1
 }
+
+/* Typing */
+.inner-list-typing {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.box-typing {
+    display: flex;
+    flex-direction: column;
+    max-width: 70%;
+    padding: 8px 12px;
+    background-color: #e9ecef;
+    border-radius: 15px;
+    line-height: 1.4;
+    word-wrap: break-word;
+    font-size: 14px;
+}
+
+.box-typing .inner-name {
+    font-weight: 600;
+    margin-bottom: 2px;
+    color: #333;
+}
+
+.box-typing .inner-dots {
+    display: flex;
+    gap: 2px;
+}
+
+.box-typing .inner-dots span {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background-color: #333;
+    border-radius: 50%;
+    opacity: 0.5;
+    animation: typing 1s infinite;
+}
+
+.box-typing .inner-dots span:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.box-typing .inner-dots span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.box-typing .inner-dots span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes typing {
+    0%, 60%, 100% {
+        transform: translateY(0);
+        opacity: 0.5;
+    }
+    30% {
+        transform: translateY(-4px);
+        opacity: 1;
+    }
+}
